@@ -41,19 +41,45 @@
                                 <option value="vintage">Vintage Sepia</option>
                             </select>
                         </div>
-                        <button id="convert-btn"
-                            class="px-3 py-1 text-sm bg-indigo-800 hover:bg-indigo-700 text-white rounded transition flex gap-2 items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="lucide lucide-arrow-right-left-icon lucide-arrow-right-left w-4 h-4">
-                                <path d="m16 3 4 4-4 4" />
-                                <path d="M20 7H4" />
-                                <path d="m8 21-4-4 4-4" />
-                                <path d="M4 17h16" />
-                            </svg>
-                            Convert
-                        </button>
+                        <div class="flex items-center gap-4">
+                            <button id="ai-css-btn"
+                                class="px-3 py-1 text-sm bg-teal-800 hover:bg-teal-700 text-white rounded transition flex gap-2 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-sparkles-icon lucide-sparkles w-4 h-4">
+                                    <path
+                                        d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
+                                    <path d="M20 2v4" />
+                                    <path d="M22 4h-4" />
+                                    <circle cx="4" cy="20" r="2" />
+                                </svg>
+                                AI CSS
+                            </button>
+                            <button id="download-css-btn"
+                                class="px-3 py-1 text-sm bg-orange-800 hover:bg-orange-700 text-white rounded transition flex gap-2 items-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="w-4 h-4">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Download CSS
+                            </button>
+                            <button id="convert-btn"
+                                class="px-3 py-1 text-sm bg-indigo-800 hover:bg-indigo-700 text-white rounded transition flex gap-2 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-arrow-right-left-icon lucide-arrow-right-left w-4 h-4">
+                                    <path d="m16 3 4 4-4 4" />
+                                    <path d="M20 7H4" />
+                                    <path d="m8 21-4-4 4-4" />
+                                    <path d="M4 17h16" />
+                                </svg>
+                                Convert
+                            </button>
+                        </div>
                     </div>
                     <textarea id="markdown-input"
                         class="flex-1 w-full px-4 py-3 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 resize-none focus:outline-none font-mono text-sm"
@@ -67,7 +93,7 @@
                         <h2 class="text-sm font-medium text-gray-700 dark:text-gray-300">Output</h2>
                         <div class="flex items-center gap-2">
                             <button id="copy-btn"
-                                class="px-3 py-1 text-xs bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded transition flex gap-1 items-center hidden">
+                                class="py-1.5 px-3 text-xs bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded transition flex gap-1 items-center hidden">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="w-3 h-3">
@@ -92,11 +118,37 @@
 
                     <!-- Code Area -->
                     <div id="code-area" class="flex-1 overflow-auto hidden">
-                        <pre class="m-0 min-h-full max-w-full bg-gray-950"><code id="html-code" class="language-html block p-4 text-sm whitespace-pre-wrap"></code></pre>
+                        <pre
+                            class="m-0 min-h-full max-w-full bg-gray-950"><code id="html-code" class="language-html block p-4 text-sm whitespace-pre-wrap"></code></pre>
                     </div>
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- AI CSS Modal -->
+    <div id="ai-css-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg w-11/12 max-w-2xl p-4">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">AI CSS Input</h3>
+                <button id="ai-css-close" class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 px-2 py-1 rounded">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    <span class="text-sm">Close</span>
+                </button>
+            </div>
+            <textarea id="ai-css-textarea" class="w-full h-48 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" placeholder="Enter CSS or prompt..."></textarea>
+            <div class="mt-3 text-right">
+                <button id="ai-css-save" class="inline-flex items-center gap-2 px-3 py-1 bg-indigo-800 hover:bg-indigo-700 text-white rounded">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span class="text-sm">Save</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -180,7 +232,7 @@
                     htmlCode.className = 'language-html block p-4 text-sm whitespace-pre-wrap';
                     // Apply highlighting
                     hljs.highlightElement(htmlCode);
-                    
+
                     // Always show copy button after conversion if in code view
                     if (viewSelector.value === 'code') {
                         copyBtn.classList.remove('hidden');
@@ -190,6 +242,132 @@
                 console.error('Error converting markdown:', error);
             }
         });
+
+        // AI CSS modal handlers
+        const aiCssBtn = document.getElementById('ai-css-btn');
+        const aiCssModal = document.getElementById('ai-css-modal');
+        const aiCssClose = document.getElementById('ai-css-close');
+        const aiCssSave = document.getElementById('ai-css-save');
+        const aiCssTextarea = document.getElementById('ai-css-textarea');
+        const downloadCssBtn = document.getElementById('download-css-btn');
+
+        // Store generated CSS globally
+        let generatedAiCss = '';
+
+        function openAiModal() {
+            aiCssModal.classList.remove('hidden');
+            aiCssModal.classList.add('flex');
+            aiCssTextarea.focus();
+        }
+
+        function closeAiModal() {
+            aiCssModal.classList.add('hidden');
+            aiCssModal.classList.remove('flex');
+        }
+
+        async function generateAndApplyAiCss() {
+            const prompt = aiCssTextarea.value.trim();
+            
+            if (!prompt) {
+                alert('Please enter a prompt');
+                return;
+            }
+
+            // Show loading state
+            const originalText = aiCssSave.innerHTML;
+            aiCssSave.disabled = true;
+            aiCssSave.innerHTML = `
+                <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span class="text-sm">Generating...</span>
+            `;
+
+            try {
+                const response = await fetch('/ai-css', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+
+                if (data.css) {
+                    generatedAiCss = data.css;
+                    
+                    // Enable download button
+                    downloadCssBtn.disabled = false;
+                    
+                    // Apply the CSS to current HTML if it exists
+                    if (htmlCode.textContent.trim()) {
+                        const currentHtml = htmlCode.textContent;
+                        
+                        // Replace the CSS in the <style> tag
+                        const styledHtml = currentHtml.replace(
+                            /(<style>)([\s\S]*?)(<\/style>)/i,
+                            `$1\n${generatedAiCss}\n    $3`
+                        );
+
+                        // Update preview
+                        const iframeDoc = previewIframe.contentDocument || previewIframe.contentWindow.document;
+                        iframeDoc.open();
+                        iframeDoc.write(styledHtml);
+                        iframeDoc.close();
+
+                        // Update code area
+                        htmlCode.textContent = styledHtml;
+                        htmlCode.removeAttribute('data-highlighted');
+                        htmlCode.className = 'language-html block p-4 text-sm whitespace-pre-wrap';
+                        hljs.highlightElement(htmlCode);
+                    }
+
+                    closeAiModal();
+                    aiCssTextarea.value = '';
+                }
+            } catch (error) {
+                console.error('Error generating AI CSS:', error);
+                alert('Failed to generate CSS. Please try again.');
+            } finally {
+                aiCssSave.disabled = false;
+                aiCssSave.innerHTML = originalText;
+            }
+        }
+
+        function downloadAiCss() {
+            if (!generatedAiCss) {
+                alert('No CSS to download. Please generate CSS first.');
+                return;
+            }
+
+            const blob = new Blob([generatedAiCss], { type: 'text/css' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ai-generated-style.css';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        if (aiCssBtn) aiCssBtn.addEventListener('click', openAiModal);
+        if (aiCssClose) aiCssClose.addEventListener('click', closeAiModal);
+        if (aiCssSave) aiCssSave.addEventListener('click', generateAndApplyAiCss);
+        if (downloadCssBtn) downloadCssBtn.addEventListener('click', downloadAiCss);
+
+        if (aiCssModal) {
+            aiCssModal.addEventListener('click', (e) => {
+                if (e.target === aiCssModal) closeAiModal();
+            });
+        }
 
         // Initialize highlight.js
         hljs.highlightAll();
