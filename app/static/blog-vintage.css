@@ -1,0 +1,146 @@
+/* Vintage Sepia Theme */
+body {
+    font-family: 'Courier New', 'Courier', monospace;
+    line-height: 1.65;
+    color: #3d2817;
+    background-color: #f4f1e8;
+    padding: 2.5rem;
+    max-width: 780px;
+    margin: 0 auto;
+    border: 8px double #8b7355;
+    box-shadow: 0 0 20px rgba(61, 40, 23, 0.1);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.6em;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #5d3a1a;
+    font-family: 'Times New Roman', serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+h1 {
+    font-size: 2em;
+    border-bottom: 3px double #8b7355;
+    padding-bottom: 0.5em;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.6em;
+    border-bottom: 1px solid #a89279;
+    padding-bottom: 0.3em;
+}
+
+h3 { font-size: 1.3em; }
+h4 { font-size: 1.1em; }
+h5 { font-size: 1em; }
+h6 { font-size: 0.9em; color: #6d5d4b; }
+
+p {
+    margin-bottom: 1.2em;
+    text-align: justify;
+}
+
+a {
+    color: #5d3a1a;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+a:hover {
+    color: #3d2817;
+    text-decoration-style: solid;
+}
+
+code:not(pre code) {
+    background-color: #e8dfd0;
+    color: #5d3a1a;
+    padding: 0.2em 0.4em;
+    border-radius: 2px;
+    font-size: 0.85em;
+    border: 1px dashed #a89279;
+}
+
+pre {
+    background-color: #e0d5c7;
+    border: 2px solid #a89279;
+    border-radius: 4px;
+    padding: 1em;
+    overflow-x: auto;
+    margin-bottom: 1.5em;
+}
+
+pre code {
+    background-color: transparent !important;
+    padding: 0;
+    border: none;
+    color: #3d2817;
+    font-size: inherit;
+}
+
+blockquote {
+    border-left: 4px solid #8b7355;
+    padding-left: 1.5em;
+    margin-left: 0;
+    color: #5d3a1a;
+    font-style: italic;
+    background-color: #ebe5d9;
+    padding: 0.8em 1.5em;
+}
+
+blockquote::before {
+    content: '"';
+    font-size: 3em;
+    color: #a89279;
+    line-height: 0;
+    margin-right: 0.2em;
+}
+
+ul, ol {
+    padding-left: 2.5em;
+    margin-bottom: 1.2em;
+}
+
+li {
+    margin-bottom: 0.4em;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1.5em;
+    border: 2px solid #8b7355;
+}
+
+th, td {
+    border: 1px solid #a89279;
+    padding: 0.6em 1em;
+    text-align: left;
+}
+
+th {
+    background-color: #d4c4b0;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #ebe5d9;
+}
+
+hr {
+    border: none;
+    border-top: 2px double #8b7355;
+    margin: 2em 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border: 4px solid #a89279;
+    filter: sepia(20%);
+}
