@@ -4,9 +4,8 @@ body {
     line-height: 1.65;
     color: #1b4332;
     background-color: #f1f8f4;
-    padding: 2rem;
     max-width: 820px;
-    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 h1, h2, h3, h4, h5, h6 {

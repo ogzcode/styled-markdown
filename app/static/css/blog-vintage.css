@@ -4,11 +4,10 @@ body {
     line-height: 1.65;
     color: #3d2817;
     background-color: #f4f1e8;
-    padding: 2.5rem;
     max-width: 780px;
-    margin: 0 auto;
     border: 8px double #8b7355;
     box-shadow: 0 0 20px rgba(61, 40, 23, 0.1);
+    padding: 0 2rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
