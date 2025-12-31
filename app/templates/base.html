@@ -39,6 +39,7 @@
                                 <option value="lavender">Lavender Purple</option>
                                 <option value="minimal">Minimal Mono</option>
                                 <option value="vintage">Vintage Sepia</option>
+                                <option value="pink-light">Pink Light</option>
                             </select>
                         </div>
                         <div class="flex items-center gap-4">
@@ -273,6 +274,9 @@
                 return;
             }
 
+            // Get current HTML from code area if exists
+            const currentHtml = htmlCode.textContent.trim();
+
             // Show loading state
             const originalText = aiCssSave.innerHTML;
             aiCssSave.disabled = true;
@@ -290,7 +294,10 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ prompt: prompt })
+                    body: JSON.stringify({ 
+                        prompt: prompt,
+                        html: currentHtml  // Send current HTML to backend
+                    })
                 });
 
                 const data = await response.json();
@@ -306,24 +313,16 @@
                     // Enable download button
                     downloadCssBtn.disabled = false;
                     
-                    // Apply the CSS to current HTML if it exists
-                    if (htmlCode.textContent.trim()) {
-                        const currentHtml = htmlCode.textContent;
-                        
-                        // Replace the CSS in the <style> tag
-                        const styledHtml = currentHtml.replace(
-                            /(<style>)([\s\S]*?)(<\/style>)/i,
-                            `$1\n${generatedAiCss}\n    $3`
-                        );
-
+                    // If backend returned styled HTML with inline styles
+                    if (data.html) {
                         // Update preview
                         const iframeDoc = previewIframe.contentDocument || previewIframe.contentWindow.document;
                         iframeDoc.open();
-                        iframeDoc.write(styledHtml);
+                        iframeDoc.write(data.html);
                         iframeDoc.close();
 
                         // Update code area
-                        htmlCode.textContent = styledHtml;
+                        htmlCode.textContent = data.html;
                         htmlCode.removeAttribute('data-highlighted');
                         htmlCode.className = 'language-html block p-4 text-sm whitespace-pre-wrap';
                         hljs.highlightElement(htmlCode);
