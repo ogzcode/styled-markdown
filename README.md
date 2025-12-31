@@ -28,7 +28,36 @@ git clone <repo-url>
 cd md-to-html
 ```
 
-2. Sanal ortam oluşturun ve etkinleştirin:
+# MD to HTML
+
+Simple Flask app that converts user-provided Markdown into HTML and returns a preview styled with a selected theme CSS.
+
+## Overview
+
+This project converts Markdown on the server using the `markdown` Python package and applies a theme CSS from `app/static/blog-*.css`. The UI is built with Tailwind and includes a theme selector and a page-level dark/light toggle.
+
+## Features
+
+- Markdown -> HTML conversion (supports code highlighting, tables, fenced code blocks, etc.)
+- Theme selector (multiple `blog-*.css` files)
+- Dark / Light toggle stored in `localStorage`
+- Preview iframe and raw HTML view
+
+## Requirements
+
+- Python 3.13 or newer
+- Project dependencies are listed in `pyproject.toml` (e.g., `flask`, `markdown`, `bleach`, `python-dotenv`).
+
+## Installation
+
+1. Clone the repository and change directory:
+
+```bash
+git clone <repo-url>
+cd md-to-html
+```
+
+2. Create and activate a virtual environment.
 
 Windows (PowerShell):
 ```powershell
@@ -42,93 +71,73 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-3. Bağımlılıkları yükleyin.
+3. Install dependencies.
 
-Seçenek A — Standart pip yöntemi:
+Option A — standard pip method:
 
 ```bash
 pip install -e .
 ```
 
-Seçenek B — `uv` kullanarak (önerilir, daha hızlı ve proje yönetimi içerir):
-
-1. `uv` yükleyin (eğer yüklü değilse):
+Option B — using `uv` (recommended for faster environment management):
 
 ```bash
 pip install uv
-```
-
-2. Proje sanal ortamını oluşturun:
-
-```bash
 uv venv
-```
-
-3. Kilitli bağımlılık dosyanız varsa senkronize edin veya doğrudan proje bağımlılıklarını yükleyin:
-
-```bash
 uv pip sync
-# veya
+# or
 uv pip install -e .
 ```
 
-## Çalıştırma
+## Running
 
-Projeyi lokal olarak başlatmanın birkaç yolu vardır.
-
-Standart yöntem:
+Start the app locally:
 
 ```bash
 python main.py
 ```
 
-`uv` ile çalıştırma (izole, hızlı ve tavsiye edilen yöntem):
+Or with `uv`:
 
 ```bash
-# Doğrudan script olarak
 uv run python main.py
-
-# veya tek dosya script için (uygunsa)
-uv run main.py
 ```
 
-Ardından tarayıcıda `http://127.0.0.1:5000` adresini açın.
+Open `http://127.0.0.1:5000` in your browser.
 
-## Kullanım
+## Usage
 
-- Sol alandaki textarea'ya Markdown yazın veya yapıştırın.
-- Sağ üstteki `Theme` seçicisinden bir tema seçin (ör. `light`, `dark`, `ocean`, `forest`...).
-- `Convert` butonuna basın.
-- Sağ panelde `Preview` veya `HTML Code` görünümleri arasında geçiş yapabilirsiniz.
-- Header içindeki ayar butonuyla (güneş/ay ikonu) sayfa seviyesinde dark/class tabanlı tema geçişi yapılır; tercih `localStorage`'da saklanır.
+- Enter or paste Markdown into the left textarea.
+- Choose a theme from the `Theme` selector (e.g., `light`, `dark`, `ocean`, `forest`).
+- Click `Convert`.
+- Switch between `Preview` and `HTML Code` in the right panel.
+- Use the header toggle to switch page-level `dark` class (preference saved in `localStorage`).
 
-### Tema eklemek
+### Adding a Theme
 
-Yeni bir tema eklemek için `app/static` içine `blog-<tema>.css` adında bir CSS dosyası ekleyin ve `base.html` içindeki `<select id="theme-selector">` bölümüne bir `<option value="<tema>">` ekleyin.
+Add a CSS file named `blog-<theme>.css` to `app/static` and add a matching `<option value="<theme>">` in `base.html`'s theme selector.
 
-## Teknik Notlar
+## Technical Notes
 
-- Markdown dönüşümü `app/routes/home.py` içindeki `/convert` endpoint'i ile sağlanır. Endpoint, gelen markdown'u HTML'e çevirir ve seçilen temaya ait CSS dosyasını okuyup `<style>` içinde sararak JSON ile döner.
-- CSS dosyaları `app/static` klasöründedir.
-- Tailwind CDN kullanılırken `dark:` sınıflarının class tabanlı çalışması için `base.html` içinde `@custom-variant dark (&:where(.dark, .dark *));` tanımlaması eklendi. Bu sayede header'daki toggle ile `html` elementine eklenen `dark` sınıfı, `dark:` prefiksli stilleri tetikler.
-- Güvenlik: HTML üretiminde ek güvenlik gerekiyorsa (kullanıcı girdisi), `bleach` veya benzeri bir kütüphane ile sanitizasyon eklemeniz önerilir. `pyproject.toml` içinde `bleach` bağımlılığı listelenmiştir fakat şu anki kodda otomatik sanitizasyon yapılmamaktadır.
+- Markdown conversion happens in the `/convert` endpoint in `app/routes/home.py`. The endpoint converts Markdown to HTML and applies the selected theme CSS inline before returning JSON.
+- CSS files live under `app/static`.
+- Tailwind CDN is used; `base.html` defines `@custom-variant dark (&:where(.dark, .dark *));` so class-based `dark` toggling works with `dark:` utilities.
+- Security: if user-provided HTML is rendered, consider sanitizing with `bleach` or similar.
 
-## Geliştirme
+## Development
 
-- Kod yapısı:
-	- `main.py` — uygulamayı çalıştırır
-	- `app/__init__.py` — Flask uygulaması ve blueprint kayıtları
-	- `app/routes/home.py` — ana route'lar ve `/convert` endpoint
-	- `app/templates/` — Jinja2 şablonları (`base.html`, `partials/_header.html`)
-	- `app/static/` — temalar (CSS)
+- Project structure:
+	- `main.py` — application entry point
+	- `app/__init__.py` — Flask app and blueprint registration
+	- `app/routes/home.py` — main routes and `/convert` endpoint
+	- `app/templates/` — Jinja2 templates (`base.html`, `partials/_header.html`)
+	- `app/static/` — theme CSS files
 
-## Hata Ayıklama & Sık Karşılaşılan Sorunlar
+## Debugging & Common Issues
 
-- Tema değişiklikleri çalışmıyorsa tarayıcı konsolunu kontrol edin; `localStorage`'a `theme` değeri yazılıyor mu bakın.
-- Eğer `dark:` stilleri tetiklenmiyorsa `base.html` içinde `@custom-variant` tanımının korunup korunmadığını ve Tailwind CDN sürümünü kontrol edin.
+- If theme changes don't appear, check the browser console and verify `localStorage` contains the `theme` key.
+- If `dark:` utilities are not taking effect, ensure `@custom-variant` is present in `base.html` and the Tailwind CDN version supports it.
+- **`/ai-css` endpoint:** Now accepts an optional `html` parameter. When provided, the endpoint generates CSS (via Gemini), strips markdown fences, applies the CSS inline to the supplied HTML, and returns both the raw CSS and the inline-styled HTML. If `html` is omitted, it returns only the generated CSS.
+- **Notes & limitations:** Complex selectors, pseudo-elements, or some advanced CSS features may be ignored; invalid selectors are safely skipped. Existing inline styles are preserved and merged with generated styles. Consider sanitizing user HTML (e.g., with `bleach`) if exposing to untrusted input.
 
----
-
-Dosya: [app/templates/base.html](app/templates/base.html)
-
-`, güncelleme yapmak isterseniz yardımcı olabilirim.`
+If you want this summary translated to Turkish or integrated into a different documentation file, tell me where to place it.
